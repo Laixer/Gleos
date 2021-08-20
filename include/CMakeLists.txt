@@ -1,0 +1,1 @@
+target_include_directories(gleos INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
