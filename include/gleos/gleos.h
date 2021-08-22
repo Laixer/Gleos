@@ -85,22 +85,4 @@ namespace gleos
     {
         return (buffer[0] << 8) | buffer[1];
     }
-
-    /**
-     * Namespace for status pheripherials.
-     */
-    namespace status
-    {
-        /**
-         * Initialize status pheripherials.
-         */
-        void init();
-
-        /**
-         * Enable/disable status LED.
-         * 
-         * @param is_high Trigger LED high or low.
-         */
-        void status_led(bool is_high);
-    } // status
 } // gleos
