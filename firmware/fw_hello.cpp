@@ -9,18 +9,25 @@
  */
 
 #include "gleos/uart.h"
+#include "gleos/status.h"
 
 #include <iostream>
 #include <sstream>
 
 int main()
 {
+    // Enable console.
     gleos::stdio_console_port();
+
+    // Initialize the status device.
+    gleos::status::init();
 
     gleos::uart uart{uart1, 115200};
 
     while (true)
     {
+        gleos::status::status_led(true);
+
         {
             std::stringstream ss;
 
@@ -48,6 +55,8 @@ int main()
 
             uart << ss.str();
         }
+
+        gleos::status::status_led(false);
 
         gleos::sleep(500);
     }
