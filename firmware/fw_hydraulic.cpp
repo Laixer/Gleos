@@ -43,13 +43,11 @@ enum actuator_designation
 
 int main()
 {
-    // Enable logger console.
+    // Enable console.
     gleos::stdio_console_port();
 
     // Set the watch deadtime to 1s.
     // gleos::watchdog::start(1000);
-
-    gleos::status::init();
 
     // Initialize all dual motor actuators.
     std::array<gleos::actuator::motor, 6> motor_pwm{
@@ -98,8 +96,6 @@ int main()
     while (true)
     {
         auto frame = netlayer.accept();
-
-        gleos::status::status_led(true);
 
         // gleos::watchdog::update();
 
@@ -152,8 +148,6 @@ int main()
             std::cout << "Invalid payload type" << std::endl;
             break;
         }
-
-        gleos::status::status_led(false);
     }
 
     return 0;
