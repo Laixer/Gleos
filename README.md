@@ -1,8 +1,9 @@
-# Glonax Embedded Operating System.
+# Glonax Embedded Operating System
 
 [![CMake](https://github.com/Laixer/Gleos/actions/workflows/cmake.yml/badge.svg)](https://github.com/Laixer/Gleos/actions/workflows/cmake.yml)
 
-### Build
+## Build
 
-# Requirements
+### Requirements
 - Pico SDK
+- GCC crosscompiler
