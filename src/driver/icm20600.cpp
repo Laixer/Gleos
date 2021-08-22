@@ -202,10 +202,7 @@ void icm20600::set_acc_scale_range(acc_scale_type_t range)
         break;
     }
 
-    {
-        uint8_t buffer[] = {ICM20600_ACCEL_CONFIG, data};
-        m_i2c.write(buffer, sizeof(buffer));
-    }
+    m_i2c.write_register_byte(ICM20600_ACCEL_CONFIG, data);
 }
 
 void icm20600::set_acc_output_data_rate(acc_lownoise_odr_type_t odr)
@@ -248,8 +245,7 @@ void icm20600::set_acc_output_data_rate(acc_lownoise_odr_type_t odr)
         break;
     }
 
-    uint8_t buffer[] = {ICM20600_ACCEL_CONFIG2, data};
-    m_i2c.write(buffer, sizeof(buffer));
+    m_i2c.write_register_byte(ICM20600_ACCEL_CONFIG2, data);
 }
 
 // Averaging filter only applies to low power mode.
@@ -277,8 +273,7 @@ void icm20600::set_acc_average_sample(acc_averaging_sample_type_t sample)
         break;
     }
 
-    uint8_t buffer[] = {ICM20600_ACCEL_CONFIG2, data};
-    m_i2c.write(buffer, sizeof(buffer));
+    m_i2c.write_register_byte(ICM20600_ACCEL_CONFIG2, data);
 }
 
 void icm20600::set_gyro_scale_range(gyro_scale_type_t range)
@@ -356,8 +351,7 @@ void icm20600::set_gyro_average_sample(gyro_averaging_sample_type_t sample)
         break;
     }
 
-    uint8_t buffer[] = {ICM20600_GYRO_LP_MODE_CFG, data};
-    m_i2c.write(buffer, sizeof(buffer));
+    m_i2c.write_register_byte(ICM20600_GYRO_LP_MODE_CFG, data);
 }
 
 void icm20600::set_gyro_output_data_rate(gyro_lownoise_odr_type_t odr)
@@ -393,8 +387,7 @@ void icm20600::set_gyro_output_data_rate(gyro_lownoise_odr_type_t odr)
         break;
     }
 
-    uint8_t buffer[] = {ICM20600_CONFIG, data};
-    m_i2c.write(buffer, sizeof(buffer));
+    m_i2c.write_register_byte(ICM20600_CONFIG, data);
 }
 
 bool icm20600::driver_is_alive()
