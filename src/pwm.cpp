@@ -25,6 +25,7 @@ pulse_modulation::pulse_modulation(int port_a, int port_b)
     assert(m_slice == pwm_gpio_to_slice_num(port_b));
 
     pwm_config config = pwm_get_default_config();
+    pwm_config_set_clkdiv(&config, 8.f);
     pwm_config_set_wrap(&config, 255);
     pwm_init(m_slice, &config, false);
 }

@@ -52,9 +52,10 @@ int main()
     {
         if (!sensor.driver_is_alive())
         {
+            // TODO: Send this to other end.
             std::cout << "Sensor not ready" << std::endl;
 
-            gleos::sleep(5);
+            gleos::sleep(50);
 
             continue;
         }
