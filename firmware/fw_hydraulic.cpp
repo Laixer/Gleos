@@ -10,7 +10,6 @@
 
 // TODO:
 // - Flash storage
-// - Watchdog
 // - Internal temperature via ADC
 
 #include "gleos/motor.h"
@@ -48,8 +47,15 @@ int main()
     // Enable console.
     gleos::stdio_console_port();
 
-    // Set the watch deadtime to 1s.
-    // gleos::watchdog::start(1000);
+    // Set the watch deadtime to 2s.
+    // gleos::watchdog::start(2000);
+
+    std::cout << '\n'
+              << "Glonax Embedded Operating System." << '\n'
+              << " Firmware : Hydraulic" << '\n'
+              << " Version  : " << FIRMWARE_VERSION_MAJOR << "." << FIRMWARE_VERSION_MINOR << '\n'
+              << " Address  : " << ICE_DEVICE_ADDR
+              << std::endl;
 
     // Initialize all dual motor actuators.
     std::array<gleos::actuator::motor, 6> motor_pwm{
@@ -85,7 +91,7 @@ int main()
         // gleos::watchdog::update();
 
         std::cout << "Announce device on network" << std::endl;
-        std::cout << "Uptime since boot: " << gleos::sec_since_boot() << " seconds" << std::endl;
+        std::cout << "Uptime: " << gleos::sec_since_boot() << " seconds" << std::endl;
 
         return true;
     };
