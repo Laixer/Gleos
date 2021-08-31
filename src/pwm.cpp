@@ -14,6 +14,8 @@
 #include "hardware/pwm.h"
 #include "hardware/resets.h"
 
+#include <algorithm>
+
 using namespace gleos;
 
 const uint16_t cycle_max = 255;
