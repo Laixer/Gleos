@@ -16,6 +16,8 @@
 
 using namespace gleos;
 
+const uint16_t cycle_max = 255;
+
 pulse_modulation::pulse_modulation(int port_a, int port_b)
 {
     gpio_set_function(port_a, GPIO_FUNC_PWM);
@@ -25,8 +27,9 @@ pulse_modulation::pulse_modulation(int port_a, int port_b)
     assert(m_slice == pwm_gpio_to_slice_num(port_b));
 
     pwm_config config = pwm_get_default_config();
+    // TODO: It is unclear if we should keep this.
     pwm_config_set_clkdiv(&config, 8.f);
-    pwm_config_set_wrap(&config, 255);
+    pwm_config_set_wrap(&config, cycle_max);
     pwm_init(m_slice, &config, false);
 }
 
@@ -61,7 +64,7 @@ void pulse_modulation::set_channel(unsigned int channel, uint16_t value) noexcep
 
 void pulse_modulation::set_dual_channel(uint16_t value_a, uint16_t value_b) noexcept
 {
-    pwm_set_both_levels(m_slice, value_a, value_b);
+    pwm_set_both_levels(m_slice, std::min(value_a, cycle_max), std::min(value_b, cycle_max));
 }
 
 void pulse_modulation::set_all(uint16_t value) noexcept
