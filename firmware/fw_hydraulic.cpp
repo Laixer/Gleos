@@ -116,8 +116,8 @@ int main()
         {
             const auto dev_info = frame.get<gleos::ice::device_info>();
 
-            std::cout << "Device announcement" << std::endl;
-            std::cout << " Address: " << dev_info->address << '\n'
+            std::cout << "Device announcement" << '\n'
+                      << " Address: " << dev_info->address << '\n'
                       << " Version: " << (dev_info->version >> 4) << "." << static_cast<int>(dev_info->version & ~0xf0) << '\n'
                       << " Status: " << dev_info->status << std::endl;
             break;
@@ -128,7 +128,6 @@ int main()
             const auto solenoid_ctrl = frame.get<gleos::ice::solenoid_control>();
 
             std::cout << "Request for valve control" << std::endl;
-            std::cout << "Move valve " << static_cast<int>(solenoid_ctrl->id) << " to value " << solenoid_ctrl->value << std::endl;
 
             // In the exceptional case that halt is requested we
             // instructed all motors to write an explicit 0 on both
@@ -144,6 +143,8 @@ int main()
             }
             else if (solenoid_ctrl->id <= motor_pwm.size() - 1)
             {
+                std::cout << "Move valve " << static_cast<int>(solenoid_ctrl->id) << " to value " << solenoid_ctrl->value << std::endl;
+
                 motor_pwm[solenoid_ctrl->id].set_motion_value(solenoid_ctrl->value);
             }
             else
