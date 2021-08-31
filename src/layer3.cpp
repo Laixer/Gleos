@@ -122,7 +122,7 @@ void layer3::announce_device()
     });
     frame.set(device_info{
         address : m_address,
-        version : static_cast<uint8_t>(m_version.first | (m_version.second << 4)),
+        version : static_cast<uint8_t>(m_version.second | (m_version.first << 4)),
         status : device_status::none,
     });
     frame.build();

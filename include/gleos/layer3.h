@@ -162,6 +162,14 @@ namespace gleos
 
         public:
             /**
+             * The default interval for broadcast messages.
+             * 
+             * This value is in miliseconds.
+             */
+            static const int default_interval = 500;
+
+        public:
+            /**
              * Construct broadcast service instance.
              * 
              * @param delay_ms  Service timer interval in miliseconds.

@@ -50,11 +50,13 @@ int main()
     // Set the watch deadtime to 2s.
     // gleos::watchdog::start(2000);
 
+    // Write device information to console port.
     std::cout << '\n'
               << "Glonax Embedded Operating System." << '\n'
               << " Firmware : Hydraulic" << '\n'
               << " Version  : " << FIRMWARE_VERSION_MAJOR << "." << FIRMWARE_VERSION_MINOR << '\n'
-              << " Address  : " << ICE_DEVICE_ADDR
+              << " Address  : " << ICE_DEVICE_ADDR << '\n'
+              << " DBaud    : " << BAUD_RATE
               << std::endl;
 
     // Initialize all dual motor actuators.
@@ -78,8 +80,8 @@ int main()
         pwm.enable();
     }
 
+    // Open the data channel.
     gleos::uart serial{UART_ID, BAUD_RATE};
-
     gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR, {FIRMWARE_VERSION_MAJOR, FIRMWARE_VERSION_MINOR}};
 
     const auto periodic_update = [&]
@@ -96,7 +98,7 @@ int main()
         return true;
     };
 
-    gleos::timer_interval timer{500, periodic_update};
+    gleos::timer_interval timer{gleos::ice::broadcast_service::default_interval, periodic_update};
 
     // Postpone deadline timer.
     // gleos::watchdog::update();

@@ -26,8 +26,17 @@ int main()
     // Enable logger console.
     gleos::stdio_console_port();
 
-    gleos::uart serial{UART_ID, BAUD_RATE};
+    // Write device information to console port.
+    std::cout << '\n'
+              << "Glonax Embedded Operating System." << '\n'
+              << " Firmware : IMU" << '\n'
+              << " Version  : " << FIRMWARE_VERSION_MAJOR << "." << FIRMWARE_VERSION_MINOR << '\n'
+              << " Address  : " << ICE_DEVICE_ADDR << '\n'
+              << " DBaud    : " << BAUD_RATE
+              << std::endl;
 
+    // Open the data channel.
+    gleos::uart serial{UART_ID, BAUD_RATE};
     gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR, {FIRMWARE_VERSION_MAJOR, FIRMWARE_VERSION_MINOR}};
 
     gleos::i2c::block i2c_0{20, 21, gleos::i2c::mode::fast_mode};
@@ -48,7 +57,7 @@ int main()
         return true;
     };
 
-    gleos::timer_interval timer{500, periodic_update};
+    gleos::timer_interval timer{gleos::ice::broadcast_service::default_interval, periodic_update};
 
     while (true)
     {
