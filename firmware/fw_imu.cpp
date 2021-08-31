@@ -18,6 +18,8 @@
 #define BAUD_RATE 115200
 
 #define ICE_DEVICE_ADDR 0x9
+#define FIRMWARE_VERSION_MAJOR 2
+#define FIRMWARE_VERSION_MINOR 3
 
 int main()
 {
@@ -26,7 +28,7 @@ int main()
 
     gleos::uart serial{UART_ID, BAUD_RATE};
 
-    gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR};
+    gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR, {FIRMWARE_VERSION_MAJOR, FIRMWARE_VERSION_MINOR}};
 
     gleos::i2c::block i2c_0{20, 21, gleos::i2c::mode::fast_mode};
 

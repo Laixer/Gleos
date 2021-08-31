@@ -103,6 +103,7 @@ namespace gleos
         class layer3
         {
             address_type m_address;
+            std::pair<unsigned int, unsigned int> m_version;
             uart &m_device;
 
         public:
@@ -112,7 +113,7 @@ namespace gleos
              * @param device    Device which can read and write data blobs.
              * @param address   Local device address. 
              */
-            layer3(uart &device, address_type address);
+            layer3(uart &device, address_type address, std::pair<unsigned int, unsigned int> version);
 
             /**
              * Announce this device on the network.

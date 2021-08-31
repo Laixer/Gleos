@@ -23,7 +23,9 @@
 #define UART_ID uart1
 #define BAUD_RATE 115200
 
-#define DEVICE_ADDR 0x7
+#define ICE_DEVICE_ADDR 0x7
+#define FIRMWARE_VERSION_MAJOR 2
+#define FIRMWARE_VERSION_MINOR 3
 
 enum actuator_designation
 {
@@ -72,7 +74,7 @@ int main()
 
     gleos::uart serial{UART_ID, BAUD_RATE};
 
-    gleos::ice::layer3 netlayer{serial, DEVICE_ADDR};
+    gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR, {FIRMWARE_VERSION_MAJOR, FIRMWARE_VERSION_MINOR}};
 
     const auto periodic_update = [&]
     {
@@ -108,7 +110,7 @@ int main()
 
             std::cout << "Device announcement" << std::endl;
             std::cout << " Address: " << dev_info->address << '\n'
-                      << " Version: " << (dev_info->version >> 4) << "." << static_cast<int>(dev_info->version) << '\n'
+                      << " Version: " << (dev_info->version >> 4) << "." << static_cast<int>(dev_info->version & ~0xf0) << '\n'
                       << " Status: " << dev_info->status << std::endl;
             break;
         }

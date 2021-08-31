@@ -71,8 +71,8 @@ void frame::build()
     });
 }
 
-layer3::layer3(uart &device, address_type address)
-    : m_device{device}, m_address{address}
+layer3::layer3(uart &device, address_type address, std::pair<unsigned int, unsigned int> version)
+    : m_device{device}, m_address{address}, m_version{version}
 {
 }
 
@@ -122,7 +122,7 @@ void layer3::announce_device()
     });
     frame.set(device_info{
         address : m_address,
-        version : 33,
+        version : static_cast<uint8_t>(m_version.first | (m_version.second << 4)),
         status : device_status::none,
     });
     frame.build();
