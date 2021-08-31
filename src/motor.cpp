@@ -10,6 +10,8 @@
 
 #include "gleos/motor.h"
 
+#include <cmath>
+
 using namespace gleos::actuator;
 
 motor::motor(int port_a, int port_b)
@@ -25,7 +27,7 @@ void motor::set_motion_value(int64_t value) noexcept
     }
     else if (value < 0)
     {
-        set_dual_channel(0, value);
+        set_dual_channel(0, std::abs(value));
     }
     else
     {
