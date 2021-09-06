@@ -17,6 +17,9 @@ namespace gleos
     class pulse_modulation
     {
         unsigned int m_slice;
+        bool m_is_enabled = false;
+        uint16_t m_chan_a_value = 0;
+        uint16_t m_chan_b_value = 0;
 
     public:
         /* Create new pulse modulation instance. */
