@@ -39,20 +39,23 @@ namespace gleos
     {
         using namespace detail;
 
+        // There should be a device configuration file at any time. If the file
+        // was not found then is must be created now. The device configuration
+        // must survive future firmware updates.
         if (flash::has_file<device_config>())
         {
-            auto file = gleos::flash::open_file<device_config>();
+            auto file = flash::open_file<device_config>();
 
             device_id = file.device_id;
         }
         else
         {
-            device_config meta{
+            device_config file{
                 device_id : device_id, // 0x2519
             };
 
             // TODO: Handle result
-            flash::save_file(meta);
+            flash::save_file(file);
         }
     }
 

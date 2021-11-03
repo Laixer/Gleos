@@ -32,7 +32,7 @@ namespace gleos
         static void irq_handler();
 
     public:
-        uart(uart_inst_t *iface, int port_tx, int port_rx, int baud_rate);
+        uart(uart_inst_t *iface, int port_tx, int port_rx, int baud_rate = GLEOS_DEFAULT_UART_BAUD_RATE);
         uart(const uart &) = delete;
         ~uart();
 

@@ -17,8 +17,28 @@
 
 namespace gleos
 {
+    /**
+     * Functional device id.
+     * 
+     * This id *must* be unique across all controllers in a network. The id
+     * correlates to the controller function, regardless of the firmware.
+     */
     extern uint16_t device_id;
 
+    /**
+     * Instance device id.
+     * 
+     * This id *must* be unique across all controllers in a network. The id
+     * is used in combination with other identifiers.
+     */
+    inline uint8_t instance_id()
+    {
+        return device_id & static_cast<uint16_t>(0x00ff);
+    }
+
+    /**
+     * Bootstrap the operating system.
+     */
     void bootstrap();
 
     /**

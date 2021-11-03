@@ -117,7 +117,7 @@ void shell::read()
            << "\r\n";
 
         ss << "Instance ID: "
-           << (device_id & (uint16_t)0x00ff)
+           << instance_id()
            << "\r\n";
 
         m_device << ss.str();
