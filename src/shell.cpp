@@ -40,7 +40,7 @@ std::string shell::read_command()
     char c;
     while ((c = m_device.read_byte()) != '\r')
     {
-        if (std::isgraph(c))
+        if (std::isprint(c))
         {
             command_buffer += c;
             m_device.write_putc(c);
@@ -78,7 +78,7 @@ void shell::read()
         ss << "Commands:\r\n"
            << " help                Show this help message\r\n"
            << " uptime              System uptime in seconds\r\n"
-           << " id                  Unique device ID\r\n"
+           << " id                  Show all IDs\r\n"
            << " status led [on|off] Toggle status LED\r\n"
            << " reboot              System soft reboot\r\n"
            << " bootsel             Boot into BOOTSEL mode\r\n"
@@ -98,7 +98,7 @@ void shell::read()
     {
         std::stringstream ss;
 
-        ss << " up "
+        ss << "up "
            << sec_since_boot()
            << " seconds \r\n";
 
@@ -108,7 +108,8 @@ void shell::read()
     {
         std::stringstream ss;
 
-        ss << unique_id()
+        ss << "Hardware ID: "
+           << unique_id()
            << "\r\n";
 
         m_device << ss.str();
@@ -129,7 +130,7 @@ void shell::read()
     {
         std::stringstream ss;
 
-        ss << "Firmware version " << GLEOS_FIRMWARE_VERSION_MAJOR << "." << GLEOS_FIRMWARE_VERSION_MINOR << "\r\n";
+        ss << "Firmware version: " << GLEOS_FIRMWARE_VERSION_MAJOR << "." << GLEOS_FIRMWARE_VERSION_MINOR << "\r\n";
 
         m_device << ss.str();
     }
