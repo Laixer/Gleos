@@ -14,6 +14,8 @@
 
 #include "hardware/flash.h"
 
+#include <cstring>
+
 /* Flash file offset start */
 #define FLASH_FILE_OFFSET (1024 * 1024)
 /* Flash file magic value */
@@ -60,7 +62,7 @@ namespace gleos::flash
     {
         using namespace detail;
 
-        uint8_t buffer[FLASH_PAGE_SIZE];
+        std::array<uint8_t, FLASH_PAGE_SIZE> buffer;
 
         flash_file<T> file{
             magic : FLASH_FILE_MAGIC,
@@ -69,10 +71,10 @@ namespace gleos::flash
 
         if (sizeof(file) < FLASH_PAGE_SIZE)
         {
-            memcpy(buffer, &file, sizeof(file));
+            memcpy(buffer.data(), &file, sizeof(file));
 
             flash_range_erase(FLASH_FILE_OFFSET + T::offset, FLASH_SECTOR_SIZE);
-            flash_range_program(FLASH_FILE_OFFSET + T::offset, buffer, FLASH_PAGE_SIZE);
+            flash_range_program(FLASH_FILE_OFFSET + T::offset, buffer.data(), FLASH_PAGE_SIZE);
 
             return true;
         }

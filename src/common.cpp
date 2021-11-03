@@ -11,6 +11,7 @@
 #include "gleos/gleos.h"
 #include "gleos/uart.h"
 #include "gleos/watchdog.h"
+#include "gleos/flash.h"
 
 #include "pico/stdlib.h"
 #include "pico/stdio_uart.h"
@@ -22,6 +23,39 @@
 
 namespace gleos
 {
+    uint16_t device_id = 0; // TODO: set error code.
+
+    namespace detail
+    {
+        struct device_config
+        {
+            static const int offset = 0;
+
+            uint16_t device_id;
+        };
+    }
+
+    void bootstrap()
+    {
+        using namespace detail;
+
+        if (flash::has_file<device_config>())
+        {
+            auto file = gleos::flash::open_file<device_config>();
+
+            device_id = file.device_id;
+        }
+        else
+        {
+            device_config meta{
+                device_id : device_id, // 0x2519
+            };
+
+            // TODO: Handle result
+            flash::save_file(meta);
+        }
+    }
+
     void sleep(uint32_t delay_ms) noexcept
     {
         sleep_ms(delay_ms);

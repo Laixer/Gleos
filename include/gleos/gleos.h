@@ -17,6 +17,10 @@
 
 namespace gleos
 {
+    extern uint16_t device_id;
+
+    void bootstrap();
+
     /**
      * Sleep the current thread.
      * 
