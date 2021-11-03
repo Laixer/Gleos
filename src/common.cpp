@@ -39,7 +39,7 @@ namespace gleos
 
     void reboot(boot_mode mode) noexcept
     {
-        if (boot_mode::bootsel)
+        if (mode == boot_mode::bootsel)
         {
             reset_usb_boot(0, 0);
         }

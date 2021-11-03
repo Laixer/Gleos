@@ -51,7 +51,7 @@ namespace gleos
         }
 
         void write_putc(char c);
-        void write(uint8_t *buffer, size_t len);
+        void write(const uint8_t *buffer, size_t len);
 
         uint8_t read_byte();
         void read(uint8_t *buffer, size_t len);

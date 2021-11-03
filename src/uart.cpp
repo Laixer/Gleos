@@ -105,7 +105,7 @@ void uart::write_putc(char c)
     uart_putc(m_iface, c);
 }
 
-void uart::write(uint8_t *buffer, size_t len)
+void uart::write(const uint8_t *buffer, size_t len)
 {
     uart_write_blocking(m_iface, buffer, len);
 }
