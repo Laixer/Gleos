@@ -9,4 +9,5 @@ target_link_libraries(gleos INTERFACE
     pico_stdlib
     pico_unique_id
     hardware_pwm
-    hardware_i2c)
+    hardware_i2c
+    hardware_spi)
