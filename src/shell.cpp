@@ -40,8 +40,20 @@ std::string shell::read_command()
     char c;
     while ((c = m_device.read_byte()) != '\r')
     {
-        command_buffer += c;
-        m_device.write_putc(c);
+        if (std::isgraph(c))
+        {
+            command_buffer += c;
+            m_device.write_putc(c);
+        }
+        else if (c == '\177')
+        {
+            command_buffer.pop_back();
+
+            // NOTE: Backspace terminal control is always tricky. Depending on
+            //       the OS and the terminal settings this may not work as
+            //       expected. There is no portable solution.
+            m_device << "\b \b";
+        }
     }
 
     return command_buffer;
@@ -55,7 +67,11 @@ void shell::read()
 
     m_device << "\r\n";
 
-    if (command_buffer == "help")
+    if (command_buffer.empty())
+    {
+        return;
+    }
+    else if (command_buffer == "help")
     {
         std::stringstream ss;
 
