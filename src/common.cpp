@@ -10,10 +10,12 @@
 
 #include "gleos/gleos.h"
 #include "gleos/uart.h"
+#include "gleos/watchdog.h"
 
 #include "pico/stdlib.h"
 #include "pico/stdio_uart.h"
 #include "pico/unique_id.h"
+#include "pico/bootrom.h"
 
 #define GLEOS_STDIO_TX_PIN 0
 #define GLEOS_STDIO_RX_PIN 1
@@ -35,6 +37,21 @@ namespace gleos
         return to_ms_since_boot(get_absolute_time());
     }
 
+    void reboot(boot_mode mode) noexcept
+    {
+        if (boot_mode::bootsel)
+        {
+            reset_usb_boot(0, 0);
+        }
+        else
+        {
+            // Soft reboot is performed via the watchdog reboot action. The
+            // watchdog reboot will instruct the CPU to time-out instantly
+            // causing the reboot.
+            watchdog::reboot();
+        }
+    }
+
     long unique_id() noexcept
     {
         pico_unique_board_id_t id;
@@ -51,8 +68,8 @@ namespace gleos
         // Erase any previously configured settings from memory.
         uart::unset(uart0);
 
-        // NOTE: The console port claims the hardware UART device, which cannnot be
-        //       allocated again.
+        // NOTE: The console port claims the hardware UART device, which cannnot
+        //       be allocated again.
         stdio_uart_init_full(uart0, GLEOS_DEFAULT_UART_BAUD_RATE, GLEOS_STDIO_TX_PIN, GLEOS_STDIO_RX_PIN);
     }
 

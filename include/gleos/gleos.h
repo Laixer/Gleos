@@ -34,6 +34,21 @@ namespace gleos
      */
     uint32_t ms_since_boot() noexcept;
 
+    enum boot_mode
+    {
+        /* Reset the CPU and load the program from flash. */
+        soft_reboot,
+        /* Reset the CPU and mound the flash as USB mass storage device. */
+        bootsel,
+    };
+
+    /**
+     * System reboot.
+     * 
+     * @param mode Reboot into mode.
+     */
+    void reboot(boot_mode mode = boot_mode::soft_reboot) noexcept;
+
     /**
      * Get unique hardware identifier.
      */
