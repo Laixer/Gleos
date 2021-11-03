@@ -10,7 +10,10 @@
 
 #pragma once
 
-/**
- * Default UART baud rate.
- */
+/* Default UART baud rate. */
 #define GLEOS_DEFAULT_UART_BAUD_RATE 115200
+
+/* Firmware major version */
+#define GLEOS_FIRMWARE_VERSION_MAJOR 2
+/* Firmware minor version */
+#define GLEOS_FIRMWARE_VERSION_MINOR 5
