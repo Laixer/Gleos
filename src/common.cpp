@@ -23,7 +23,7 @@
 
 namespace gleos
 {
-    uint16_t device_id = 0; // TODO: set error code.
+    uint16_t device_id = 0x2500;
 
     namespace detail
     {

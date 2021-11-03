@@ -63,7 +63,7 @@ void shell::read()
 {
     m_device << "gleos $ ";
 
-    std::string command_buffer = read_command();
+    const auto command_buffer = read_command();
 
     m_device << "\r\n";
 
@@ -82,6 +82,7 @@ void shell::read()
            << " status led [on|off] Toggle status LED\r\n"
            << " reboot              System soft reboot\r\n"
            << " bootsel             Boot into BOOTSEL mode\r\n"
+           << " power max           Set the CPU power level\r\n"
            << " version             Firmware version\r\n";
 
         m_device << ss.str();
@@ -130,7 +131,7 @@ void shell::read()
     {
         reboot(boot_mode::bootsel);
     }
-    else if (command_buffer == "boost")
+    else if (command_buffer == "power max")
     {
         vreg_set_voltage(VREG_VOLTAGE_MAX);
     }

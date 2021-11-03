@@ -30,6 +30,8 @@ namespace gleos
      * 
      * This id *must* be unique across all controllers in a network. The id
      * is used in combination with other identifiers.
+     * 
+     * @return Unsigned 8-bit instance id.
      */
     inline uint8_t instance_id()
     {

@@ -17,7 +17,6 @@
 #define UART_ID uart1
 #define UART_TX_PIN 4
 #define UART_RX_PIN 5
-#define BAUD_RATE 115200
 
 #define ICE_DEVICE_ADDR 0x9
 #define FIRMWARE_VERSION_MAJOR 2
@@ -28,17 +27,8 @@ int main()
     // Enable logger console.
     gleos::stdio_console_port();
 
-    // Write device information to console port.
-    std::cout << '\n'
-              << "Glonax Embedded Operating System." << '\n'
-              << " Firmware : IMU" << '\n'
-              << " Version  : " << FIRMWARE_VERSION_MAJOR << "." << FIRMWARE_VERSION_MINOR << '\n'
-              << " Address  : " << ICE_DEVICE_ADDR << '\n'
-              << " DBaud    : " << BAUD_RATE
-              << std::endl;
-
     // Open the data channel.
-    gleos::uart serial{UART_ID, UART_TX_PIN, UART_RX_PIN, BAUD_RATE};
+    gleos::uart serial{UART_ID, UART_TX_PIN, UART_RX_PIN};
     gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR, {FIRMWARE_VERSION_MAJOR, FIRMWARE_VERSION_MINOR}};
 
     gleos::i2c::block i2c_0{20, 21, gleos::i2c::mode::fast_mode};

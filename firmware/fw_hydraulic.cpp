@@ -9,7 +9,6 @@
  */
 
 // TODO:
-// - Flash storage
 // - Internal temperature via ADC
 
 #include "gleos/motor.h"
@@ -22,7 +21,6 @@
 #define UART_ID uart1
 #define UART_TX_PIN 4
 #define UART_RX_PIN 5
-#define BAUD_RATE 115200
 
 #define ICE_DEVICE_ADDR 0x7
 #define FIRMWARE_VERSION_MAJOR 2
@@ -52,15 +50,6 @@ int main()
     // Set the watch deadtime to 2s.
     // gleos::watchdog::start(2000);
 
-    // Write device information to console port.
-    std::cout << '\n'
-              << "Glonax Embedded Operating System." << '\n'
-              << " Firmware : Hydraulic" << '\n'
-              << " Version  : " << FIRMWARE_VERSION_MAJOR << "." << FIRMWARE_VERSION_MINOR << '\n'
-              << " Address  : " << ICE_DEVICE_ADDR << '\n'
-              << " DBaud    : " << BAUD_RATE
-              << std::endl;
-
     // Initialize all dual motor actuators.
     std::array<gleos::actuator::motor, 6> motor_pwm{
         // Index: 0; Actuate: Bucket
@@ -83,7 +72,7 @@ int main()
     }
 
     // Open the data channel.
-    gleos::uart serial{UART_ID, UART_TX_PIN, UART_RX_PIN, BAUD_RATE};
+    gleos::uart serial{UART_ID, UART_TX_PIN, UART_RX_PIN};
     gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR, {FIRMWARE_VERSION_MAJOR, FIRMWARE_VERSION_MINOR}};
 
     const auto periodic_update = [&]
