@@ -28,3 +28,8 @@ bool watchdog::caused_reboot()
 {
     return watchdog_caused_reboot();
 }
+
+void watchdog::reboot()
+{
+    watchdog_reboot(0, SRAM_END, 0);
+}

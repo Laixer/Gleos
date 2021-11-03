@@ -33,5 +33,10 @@ namespace gleos
          * Was the reboot caused by the watchdog.
          */
         bool caused_reboot();
+
+        /**
+         * Watchdog timeout reboot.
+         */
+        void reboot();
     };
 }
