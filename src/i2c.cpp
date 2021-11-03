@@ -18,8 +18,10 @@ block::block(int port_sda, int port_scl, mode baudrate)
     : m_instance{i2c_default}
 {
     i2c_init(i2c_default, baudrate * 1000);
+
     gpio_set_function(port_sda, GPIO_FUNC_I2C);
     gpio_set_function(port_scl, GPIO_FUNC_I2C);
+
     gpio_pull_up(port_sda);
     gpio_pull_up(port_scl);
 }

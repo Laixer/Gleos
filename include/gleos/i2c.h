@@ -39,6 +39,7 @@ namespace gleos
         };
 
         // TODO: Do something with the errors.
+        // TODO: Rename to bus
         class layer3
         {
             block &m_block;
