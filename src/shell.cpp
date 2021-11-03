@@ -112,6 +112,14 @@ void shell::read()
            << unique_id()
            << "\r\n";
 
+        ss << "Device ID: "
+           << device_id
+           << "\r\n";
+
+        ss << "Instance ID: "
+           << (device_id & (uint16_t)0x00ff)
+           << "\r\n";
+
         m_device << ss.str();
     }
     else if (command_buffer == "reboot")
