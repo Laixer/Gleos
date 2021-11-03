@@ -20,6 +20,8 @@
 #include <iostream>
 
 #define UART_ID uart1
+#define UART_TX_PIN 4
+#define UART_RX_PIN 5
 #define BAUD_RATE 115200
 
 #define ICE_DEVICE_ADDR 0x7
@@ -81,7 +83,7 @@ int main()
     }
 
     // Open the data channel.
-    gleos::uart serial{UART_ID, BAUD_RATE};
+    gleos::uart serial{UART_ID, UART_TX_PIN, UART_RX_PIN, BAUD_RATE};
     gleos::ice::layer3 netlayer{serial, ICE_DEVICE_ADDR, {FIRMWARE_VERSION_MAJOR, FIRMWARE_VERSION_MINOR}};
 
     const auto periodic_update = [&]

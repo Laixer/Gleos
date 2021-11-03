@@ -13,16 +13,13 @@
 #include "hardware/irq.h"
 #include "hardware/gpio.h"
 
-#define UART_TX_PIN 4
-#define UART_RX_PIN 5
-
 #define DATA_BITS 8
 #define STOP_BITS 1
 #define PARITY UART_PARITY_NONE
 
 using namespace gleos;
 
-uart::uart(uart_inst_t *iface, int baud_rate)
+uart::uart(uart_inst_t *iface, int port_tx, int port_rx, int baud_rate)
     : m_iface{iface}
 {
     uart::unset(iface);
@@ -31,8 +28,8 @@ uart::uart(uart_inst_t *iface, int baud_rate)
     uart_init(iface, baud_rate);
 
     // Bind the default pins to the UART.
-    gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
-    gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(port_tx, GPIO_FUNC_UART);
+    gpio_set_function(port_rx, GPIO_FUNC_UART);
 
     // Turn off UART flow control.
     uart_set_hw_flow(iface, false, false);
@@ -41,7 +38,6 @@ uart::uart(uart_inst_t *iface, int baud_rate)
     uart_set_format(iface, DATA_BITS, STOP_BITS, PARITY);
 
     // We're most likely to read blocks at once, so enable FIFO.
-    // uart_set_fifo_enabled(iface, true);
     uart_set_fifo_enabled(iface, true);
 }
 
@@ -102,6 +98,11 @@ uint8_t uart::read_byte()
 void uart::read(uint8_t *buffer, size_t len)
 {
     uart_read_blocking(m_iface, buffer, len);
+}
+
+void uart::write_putc(char c)
+{
+    uart_putc(m_iface, c);
 }
 
 void uart::write(uint8_t *buffer, size_t len)

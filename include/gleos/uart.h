@@ -32,7 +32,7 @@ namespace gleos
         static void irq_handler();
 
     public:
-        uart(uart_inst_t *iface, int baud_rate);
+        uart(uart_inst_t *iface, int port_tx, int port_rx, int baud_rate);
         uart(const uart &) = delete;
         ~uart();
 
@@ -50,6 +50,7 @@ namespace gleos
             return uart_is_readable(m_iface);
         }
 
+        void write_putc(char c);
         void write(uint8_t *buffer, size_t len);
 
         uint8_t read_byte();
